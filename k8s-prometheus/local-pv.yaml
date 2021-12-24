@@ -1,0 +1,68 @@
+# alertmanager的pv
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: alertmanager
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+  -  ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+      path: /data/alertmanager
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - master
+---
+# grafana的pv
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grafana
+spec:
+  capacity: 
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+  -  ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+      path: /data/grafana
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - master
+---
+  # prometheus的pv
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: promethues
+spec:
+  capacity:
+    storage: 8Gi
+  volumeMode: Filesystem
+  accessModes:
+  -  ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+      path: /data/prometheus
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - master  
